@@ -76,7 +76,7 @@ spark-submit on CLUSTER - YARN
            will be created in ${build.dir}/target folder
 3. copy the coding-test-hpal-1.0-SNAPSHOT.jar in the edge node of the cluster
 4. locate the spark-submit executable on edge node and run the following command
-    /usr/bin/spark-submit --master yarn  --class com.walmart.sample.AppleMain --num-executors 4 --executor-cores 2 --executor-memory 2g --driver-memory 2g /tmp/coding-test-hpal-1.0-SNAPSHOT.jar /user/hpal/data
+    /usr/bin/spark-submit --master yarn  --class com.coding.de.AppleMain --num-executors 4 --executor-cores 2 --executor-memory 2g --driver-memory 2g /tmp/coding-test-hpal-1.0-SNAPSHOT.jar /user/hpal/data
     make sure to change the last 2 params to reflect correct value
     1st param => location of the coding-test-hpal-1.0-SNAPSHOT.jar on the server. (i.e - /tmp/coding-test-hpal-1.0-SNAPSHOT.jar)
     2nd param => full path of the data directory. (i.e /user/hpal/data).

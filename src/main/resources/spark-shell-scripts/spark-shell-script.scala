@@ -4,13 +4,13 @@
 
 import java.sql.Timestamp
 import java.util.regex.Pattern
-import com.apple.codetest.util.Util._
-import com.apple.codetest.model.ModelFactory._
 
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.sql.functions._
 import org.apache.spark.storage.StorageLevel
 import sqlContext.implicits._
+import com.coding.de.util.Util._
+import com.coding.de.model.ModelFactory._
 val dataDir="/user/hpal/data" //point to your data dir before running
 
 //for query 1 - sales distribution

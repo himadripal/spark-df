@@ -1,4 +1,4 @@
-package com.apple.codetest.util
+package com.coding.de.util
 
 import java.text.SimpleDateFormat
 import java.sql.Timestamp

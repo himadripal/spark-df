@@ -1,4 +1,4 @@
-package com.apple.codetest.model
+package com.coding.de.model
 
 import java.sql.Timestamp
 
