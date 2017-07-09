@@ -1,0 +1,96 @@
+
+SQL context available as sqlContext.
+Loading test1.scala...
+import java.sql.Timestamp
+import java.util.regex.Pattern
+import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.sql.SQLContext
+import org.apache.spark.sql.functions._
+import org.apache.spark.storage.StorageLevel
+import java.text.SimpleDateFormat
+import scala.util.{Failure, Success, Try}
+defined class Product
+defined class Customer
+defined class Sales
+defined class Refund
+defined class Address
+defined class Customer_Extended
+convertToDouble: (input: String)Double
+convertToTimestamp: (input: String)Option[java.sql.Timestamp]
+dataDir: String = /user/svcinvpii/callcenter_test/data
+import sqlContext.implicits._
+prod_raw: org.apache.spark.rdd.RDD[String] = /user/svcinvpii/callcenter_test/data/Product.txt MapPartitionsRDD[1] at textFile at <console>:42
+prod_df: org.apache.spark.sql.DataFrame = [product_id: string, product_name: string, product_type: string, product_version: string, product_price: double]
+sales_raw: org.apache.spark.rdd.RDD[String] = /user/svcinvpii/callcenter_test/data/Sales.txt MapPartitionsRDD[8] at textFile at <console>:42
+sales_df: org.apache.spark.sql.DataFrame = [transaction_id: string, customer_id: string, product_id: string, timestamp: timestamp, total_amount: double, total_quantity: int]
+refund_raw: org.apache.spark.rdd.RDD[String] = /user/svcinvpii/callcenter_test/data/Refund.txt MapPartitionsRDD[15] at textFile at <console>:42
+refund_df: org.apache.spark.sql.DataFrame = [refund_id: string, original_transaction_id: string, customer_id: string, product_id: string, timestamp: timestamp, refund_amount: double, refund_quantity: int]
+customer_raw: org.apache.spark.rdd.RDD[String] = /user/svcinvpii/callcenter_test/data/Customer.txt MapPartitionsRDD[20] at textFile at <console>:42
+customer_df: org.apache.spark.sql.DataFrame = [customer_id: string, customer_first_name: string, customer_last_name: string, phone_number: string]
+customer_extend_raw: org.apache.spark.rdd.RDD[String] = /user/svcinvpii/callcenter_test/data/Customer_Extended.txt MapPartitionsRDD[25] at textFile at <console>:42
+customer_extended_df: org.apache.spark.sql.DataFrame = [id: string, first_name: string, last_name: string, home_phone: string, mobile_phone: string, gender: string, curr_address: struct<street_address:string,current_city:string,current_state:string,current_country:string,current_zip:string>, permanent_address: struct<street_address:string,current_city:string,current_state:string,current_country:string,current_zip:string>, office_address: struct<street_address:string,current_city:string,current_state:string,current_country:string,current_zip:string>, personal_email_address: string, work_email_address: string, twitter_id: string, facebook_id: string, linkedin_id: string]
+loaded all dfs
+2. distribution of sales by product name and product type.=============
++--------------------+------------+------------+
+|        product_name|product_type|total_amount|
++--------------------+------------+------------+
+|            Desktop |        P106|    949095.0|
+|             Laptop |        P105|    677322.0|
+|Home Automation Kit |        P105|    632367.0|
+|             Tablet |        P105|    517260.0|
+|              Phone |        P105|    339034.0|
+|             Camera |        P104|    332334.0|
+|              Watch |        P104|    288876.0|
+|            Printer |        P104|    261052.0|
+|       Baby Monitor |        P104|    223011.0|
+|          Camcorder |        P103|    195546.0|
+|      Car Connector |        P103|    168392.0|
+|      GamingConsole |        P103|    167328.0|
+|    VR Play Station |        P103|    139499.0|
+|    Doorbell Carema |        P103|    132057.0|
+|            Monitor |        P103|    108174.0|
+|            Speaker |        P103|    101022.0|
+|           Harddisk |        P102|     74943.0|
+|        Magic Mouse |        P102|     70488.0|
+|           Keyboard |        P102|     68112.0|
+|              Drone |        P102|     63991.0|
+|      Kids's tablet |        P102|     59103.0|
+|        Memory card |        P101|     12901.0|
++--------------------+------------+------------+
+
+sales_distribution: Unit = ()
+3. Total amount of all transactions that happened in year 2013 and have not been refunded as of today =============
+sales_2013: org.apache.spark.sql.DataFrame = [transaction_id: string, customer_id: string, product_id: string, timestamp: timestamp, total_amount: double, total_quantity: int]
+refund_2013_and_beyond: org.apache.spark.sql.DataFrame = [original_transaction_id: string, refund_amount: double]
+sales_and_refund_join: org.apache.spark.sql.DataFrame = [transaction_id: string, customer_id: string, product_id: string, timestamp: timestamp, total_amount: double, total_quantity: int, original_transaction_id: string, refund_amount: double]
+sales_no_refund_2013: org.apache.spark.sql.DataFrame = [total_amount: double]
+total_sales_no_refund: Double = 1489232.0
+4. customer name who made the second most purchases in the month of May 2013. Refunds be excluded==================
+sales_and_refund_2013_may: org.apache.spark.sql.DataFrame = [transaction_id: string, customer_id: string, product_id: string, timestamp: timestamp, total_amount: double, total_quantity: int, original_transaction_id: string, refund_amount: double, net_sales: double]
+per_customer_sale: org.apache.spark.sql.DataFrame = [customer_id: string, net_sales: double]
+customer_id_with_2nd_most_purchase: String = 815020
++-----------+-------------+
+|customer_id|customer_name|
++-----------+-------------+
+|     815020|GOMEZ LINDSEY|
++-----------+-------------+
+
+cust_details_with_2nd_most_purchase: Unit = ()
+5. product that has not been sold at least once (if any).=================
++----------+------------+------------+---------------+-------------+--------------+-----------+----------+---------+------------+--------------+
+|product_id|product_name|product_type|product_version|product_price|transaction_id|customer_id|product_id|timestamp|total_amount|total_quantity|
++----------+------------+------------+---------------+-------------+--------------+-----------+----------+---------+------------+--------------+
++----------+------------+------------+---------------+-------------+--------------+-----------+----------+---------+------------+--------------+
+
+prod_with_no_sale: Unit = ()
+6 . total number of users who purchased the same product consecutively at least 2 times on a given day.============
+cust_prod_sale_day: org.apache.spark.sql.DataFrame = [customer_id: string, product_id: string, sale_day: string]
+total_cust_with_2_sale_a_day: Long = 9
+7. additional - all the details of a customer who is currently living at 1154 Winters Blvd.============
++------+----------+---------+-----------+------------+------+--------------------+--------------------+--------------------+----------------------+------------------+-----------------+-------------------+--------------------+
+|    id|first_name|last_name| home_phone|mobile_phone|gender|        curr_address|   permanent_address|      office_address|personal_email_address|work_email_address|       twitter_id|        facebook_id|         linkedin_id|
++------+----------+---------+-----------+------------+------+--------------------+--------------------+--------------------+----------------------+------------------+-----------------+-------------------+--------------------+
+|815008|   MCBRIDE|  BURNETT|14152996656| 14156480309|  Male|[1154 WINTERS Blv...|[2251 HART Blvd,P...|[2694 HURST Blvd,...|    SPEARS@hotmail.com|  BISHOP@gmail.com|PATEL@twitter.com|RIVERS@facebook.com|MAHONEY@linkedin.com|
++------+----------+---------+-----------+------------+------+--------------------+--------------------+--------------------+----------------------+------------------+-----------------+-------------------+--------------------+
+
+customer_at_addr: Unit = ()

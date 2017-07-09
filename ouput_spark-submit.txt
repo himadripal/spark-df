@@ -1,0 +1,75 @@
+Multiple versions of Spark are installed but SPARK_MAJOR_VERSION is not set
+Spark1 will be picked by default
+17/07/05 18:22:57 WARN SparkConf: The configuration key 'spark.yarn.applicationMaster.waitTries' has been deprecated as of Spark 1.3 and and may be removed in the future. Please use the new key 'spark.yarn.am.waitTime' instead.
+17/07/05 18:22:58 WARN SparkConf: The configuration key 'spark.yarn.applicationMaster.waitTries' has been deprecated as of Spark 1.3 and and may be removed in the future. Please use the new key 'spark.yarn.am.waitTime' instead.
+17/07/05 18:22:58 WARN SparkConf: The configuration key 'spark.yarn.applicationMaster.waitTries' has been deprecated as of Spark 1.3 and and may be removed in the future. Please use the new key 'spark.yarn.am.waitTime' instead.
+17/07/05 18:22:58 WARN SparkConf: The configuration key 'spark.yarn.applicationMaster.waitTries' has been deprecated as of Spark 1.3 and and may be removed in the future. Please use the new key 'spark.yarn.am.waitTime' instead.
+17/07/05 18:22:59 WARN SparkConf: The configuration key 'spark.yarn.applicationMaster.waitTries' has been deprecated as of Spark 1.3 and and may be removed in the future. Please use the new key 'spark.yarn.am.waitTime' instead.
+17/07/05 18:22:59 WARN SparkConf: The configuration key 'spark.yarn.applicationMaster.waitTries' has been deprecated as of Spark 1.3 and and may be removed in the future. Please use the new key 'spark.yarn.am.waitTime' instead.
+17/07/05 18:22:59 WARN SparkConf: The configuration key 'spark.yarn.applicationMaster.waitTries' has been deprecated as of Spark 1.3 and and may be removed in the future. Please use the new key 'spark.yarn.am.waitTime' instead.
+17/07/05 18:23:00 WARN SparkConf: The configuration key 'spark.yarn.applicationMaster.waitTries' has been deprecated as of Spark 1.3 and and may be removed in the future. Please use the new key 'spark.yarn.am.waitTime' instead.
+17/07/05 18:23:00 WARN SparkConf: The configuration key 'spark.yarn.applicationMaster.waitTries' has been deprecated as of Spark 1.3 and and may be removed in the future. Please use the new key 'spark.yarn.am.waitTime' instead.
+==============================================================================================================================
+2. distribution of sales by product name and product type.
++--------------------+------------+------------+
+|        product_name|product_type|total_amount|
++--------------------+------------+------------+
+|            Desktop |       $1449|    949095.0|
+|             Laptop |        $999|    677322.0|
+|Home Automation Kit |        $999|    632367.0|
+|             Tablet |        $699|    517260.0|
+|              Phone |        $599|    339034.0|
+|             Camera |        $499|    332334.0|
+|              Watch |        $399|    288876.0|
+|            Printer |        $349|    261052.0|
+|       Baby Monitor |        $349|    223011.0|
+|          Camcorder |        $299|    195546.0|
+|      Car Connector |        $217|    168392.0|
+|      GamingConsole |        $249|    167328.0|
+|    VR Play Station |        $199|    139499.0|
+|    Doorbell Carema |        $219|    132057.0|
+|            Monitor |        $149|    108174.0|
+|            Speaker |        $149|    101022.0|
+|           Harddisk |         $99|     74943.0|
+|        Magic Mouse |         $99|     70488.0|
+|           Keyboard |         $99|     68112.0|
+|              Drone |         $89|     63991.0|
+|      Kids's tablet |         $99|     59103.0|
+|        Memory card |         $19|     12901.0|
++--------------------+------------+------------+
+
+==============================================================================================================================
+===============================================================================================================================
+3. Total amount of all transactions that happened in year 2013 and have not been refunded as of today.
+total = 1489232.0
+===============================================================================================================================
+===============================================================================================================================
+4. customer name who made the second most purchases in the month of May 2013. Refunds be excluded
++-----------+-------------+
+|customer_id|customer_name|
++-----------+-------------+
+|     815020|GOMEZ LINDSEY|
++-----------+-------------+
+
+===============================================================================================================================
+================================================================================================================================
+5. product that has not been sold at least once (if any).
++----------+------------+------------+---------------+-------------+--------------+-----------+----------+---------+------------+--------------+
+|product_id|product_name|product_type|product_version|product_price|transaction_id|customer_id|product_id|timestamp|total_amount|total_quantity|
++----------+------------+------------+---------------+-------------+--------------+-----------+----------+---------+------------+--------------+
++----------+------------+------------+---------------+-------------+--------------+-----------+----------+---------+------------+--------------+
+
+===============================================================================================================================
+===============================================================================================================================
+ 6 . total number of users who purchased the same product consecutively at least 2 times on a given day.
+total customers - 9
+==============================================================================================================================
+===============================================================================================================================
+ 7. additional - all the details of a customer who is currently living at 1154 Winters Blvd.
++------+----------+---------+-----------+------------+------+--------------------+--------------------+--------------------+----------------------+------------------+-----------------+-------------------+--------------------+
+|    id|first_name|last_name| home_phone|mobile_phone|gender|        curr_address|   permanent_address|      office_address|personal_email_address|work_email_address|       twitter_id|        facebook_id|         linkedin_id|
++------+----------+---------+-----------+------------+------+--------------------+--------------------+--------------------+----------------------+------------------+-----------------+-------------------+--------------------+
+|815008|   MCBRIDE|  BURNETT|14152996656| 14156480309|  Male|[1154 WINTERS Blv...|[2251 HART Blvd,P...|[2694 HURST Blvd,...|    SPEARS@hotmail.com|  BISHOP@gmail.com|PATEL@twitter.com|RIVERS@facebook.com|MAHONEY@linkedin.com|
++------+----------+---------+-----------+------------+------+--------------------+--------------------+--------------------+----------------------+------------------+-----------------+-------------------+--------------------+
+
+===============================================================================================================================
