@@ -5,7 +5,6 @@ import java.util.regex.Pattern
 import com.coding.de.model.ModelFactory._
 import com.coding.de.util.Util
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.expressions.Window
 import org.apache.spark.sql.functions._
 import org.apache.spark.storage.StorageLevel
 
@@ -49,6 +48,7 @@ object AppleMain extends  Util{
                                                                                         )
       ).toDF().persist(StorageLevel.MEMORY_AND_DISK);
     /*Persisting as it will be used later, intentional persist instead of cache to specify spark to use both memory and disk */
+
 
     //join product and sales data and find out sales distribution by product name and product type
     //using show to get the nice tabular format,  show by default shows 20 rows, passing show(100) to show all combinations in this case
@@ -134,6 +134,12 @@ object AppleMain extends  Util{
 
 
    /* //head(2) will take first two and last (2nd row) will be the second most
+    val per_customer_sale = sales_and_refund_2013_may.groupBy(SALES.CUSTOMER_ID.toString)
+                                                    .agg(sum(Constant.NET_SALES).alias(Constant.NET_SALES))
+                                                    .orderBy(desc(Constant.NET_SALES))
+
+
+    //head(2) will take first two and last (2nd row) will be the second most
     // extract customer_id from the last (2nd row)
     val customer_id_with_2nd_most_purchase :String  = per_customer_sale.head(2).last.getAs[String](SALES.CUSTOMER_ID.toString)
 
@@ -157,6 +163,8 @@ object AppleMain extends  Util{
                                         prod_df(PRODUCT.PRODUCT_ID.toString)===sales_df(SALES.PRODUCT_ID.toString),Constant.LEFT_OUTER).
                                         where(sales_df(SALES.TRANSACTION_ID.toString).isNull).show()*/
     val prod_with_no_sale= sales_df.join(broadcast(prod_df),$"product_id"===$"product_id",Constant.LEFT_OUTER).where($"transaction_id".isNull).show()
+
+                                        where(sales_df(SALES.TRANSACTION_ID.toString).isNull).show()
 
     println("===============================================================================================================================")
 
