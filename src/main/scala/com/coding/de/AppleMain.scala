@@ -5,6 +5,7 @@ import java.util.regex.Pattern
 import com.coding.de.model.ModelFactory._
 import com.coding.de.util.Util
 import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.expressions.Window
 import org.apache.spark.sql.functions._
 import org.apache.spark.storage.StorageLevel
 
@@ -107,11 +108,12 @@ object AppleMain extends  Util{
     // hence all transactions ids which does not have a refund will have original_transaction_id as null,
     // hence filtering all rows where ORIGINAL_TRANSACTION_ID is null
     val sales_no_refund_2013= sales_and_refund_join.where(refund_2013_and_beyond(REFUND.ORIGINAL_TRANSACTION_ID.toString).isNull).select(SALES.TOTAL_AMOUNT.toString)
+      .agg(sum(SALES.TOTAL_AMOUNT.toString)).show()
     //its efficient to use internal rdd of the data frame for map and reduce
     //need total of all rows from previous dataframe
-    val total_sales_no_refund = sales_no_refund_2013.rdd.map(_(0).asInstanceOf[Double]).reduce(_+_)
+    //val total_sales_no_refund = sales_no_refund_2013.rdd.map(_(0).asInstanceOf[Double]).reduce(_+_)
 
-    println("total = "+total_sales_no_refund)
+    //println("total = "+total_sales_no_refund)
     println("===============================================================================================================================")
 
 
@@ -162,9 +164,9 @@ object AppleMain extends  Util{
     /*val prod_with_no_sale = prod_df.join(sales_df,
                                         prod_df(PRODUCT.PRODUCT_ID.toString)===sales_df(SALES.PRODUCT_ID.toString),Constant.LEFT_OUTER).
                                         where(sales_df(SALES.TRANSACTION_ID.toString).isNull).show()*/
-    val prod_with_no_sale= sales_df.join(broadcast(prod_df),$"product_id"===$"product_id",Constant.LEFT_OUTER).where($"transaction_id".isNull).show()
+    val prod_with_no_sale= sales_df.join(broadcast(prod_df),sales_df("product_id")===prod_df("product_id"),"right_outer").where($"transaction_id".isNull).show()
 
-                                        where(sales_df(SALES.TRANSACTION_ID.toString).isNull).show()
+
 
     println("===============================================================================================================================")
 
